@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>业务架构・应用架构・数据架构实战（第 2 版） | 资源谷</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon.png"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=3.0.18"><!-- inject head--><meta name="baidu-site-verification" content="codeva-YTxPT6VRvT"><link rel="canonical" href="http://blog.gcdd.top/posts/819b5aed.html"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="内容简介业务架构是跨系统的业务蓝图，应用架构、数据架构、技术架构是解决方案的不同方面。多年来，业界已在业务架构、应用架构、数据架构、技术架构方面积累了大量经验。近几年，数字化转型更是呼唤 “懂行人” 打通四种架构，确保技术支撑业务、业务支撑战略。本书的主要内容即在于此。首先，解读战略、业务架构、应"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="资源谷"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon.png"><link rel="apple-touch-icon" href="/img/pwa/favicon.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.18' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+          },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":false,"path":"/search.xml"},
+    runtime: '2023-04-20 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."}},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: ["祝你好运，陌生人"],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: true
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: {"jump":"404 Not Found","back":"ヾ(≧∇≦*)ゝHey, hey, you fell for it."},
+    expire: false,
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: true,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><!-- universe--><canvas id="universe"></canvas><!-- background img--><!-- loading--><!-- console--><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">1</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/%E6%9E%B6%E6%9E%84/">架构<sup>1</sup></a><a href="/tags/%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84/">业务架构<sup>1</sup></a><a href="/tags/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/">应用架构<sup>1</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84/">数据架构<sup>1</sup></a><a href="/tags/%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/">技术架构<sup>1</sup></a><a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">解决方案<sup>1</sup></a><a href="/tags/%E6%95%B0%E5%AD%97%E5%8C%96%E8%BD%AC%E5%9E%8B/">数字化转型<sup>1</sup></a></div></div></div></div><!-- keyboard--><!-- righhtside--><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><a id="site-name" href="/" title="返回博客主页"><span class="title">资源谷</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">业务架构・应用架构・数据架构实战（第 2 版）</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer" title="搜索"><i class="solitude fas fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="/images/s34146951.jpg" alt="业务架构・应用架构・数据架构实战（第 2 版）"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9E%B6%E6%9E%84/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>架构</span></a><a class="post-meta__tags" href="/tags/%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>业务架构</span></a><a class="post-meta__tags" href="/tags/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>应用架构</span></a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>数据架构</span></a><a class="post-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>技术架构</span></a><a class="post-meta__tags" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>解决方案</span></a><a class="post-meta__tags" href="/tags/%E6%95%B0%E5%AD%97%E5%8C%96%E8%BD%AC%E5%9E%8B/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>数字化转型</span></a></div></div></div></div><h1 class="post-title">业务架构・应用架构・数据架构实战（第 2 版）</h1><div id="post-meta"><div class="meta-secondline"><span class="post-meta-date" title="发布于 2025-03-28 11:10:19"><i class="post-meta-icon solitude fas fa-calendar-days"></i><time datetime="2025-03-28T03:10:19.000Z">2025-03-28T03:10:19.000Z</time></span><span class="post-meta-date" title="最后更新于 2025-04-07 15:19:58"><i class="post-meta-icon solitude fas fa-arrows-rotate"></i><time datetime="2025-04-07T07:19:58.000Z">2025-04-07T07:19:58.000Z</time></span><span class="post-meta-wordcount"><i class="post-meta-icon solitude fas fa-file-word" title="文章字数"></i><span class="word-count">1.6k</span><span class="post-meta-separator"></span><i class="post-meta-icon solitude fas fa-clock" title="阅读耗时"></i><span>6 分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><p><img src="/images/s34146951.jpg"></p>
+<h1 id="内容简介"><a href="#内容简介" class="headerlink" title="内容简介"></a>内容简介</h1><p>业务架构是跨系统的业务蓝图，应用架构、数据架构、技术架构是解决方案的不同方面。多年来，业界已在业务架构、应用架构、数据架构、技术架构方面积累了大量经验。近几年，数字化转型更是呼唤 “懂行人” 打通四种架构，确保技术支撑业务、业务支撑战略。本书的主要内容即在于此。首先，解读战略、业务架构、应用架构、数据架构、技术架构五者的对应岗位、产物、脉络关系。然后，结合大案例，详探下列实战法：<br>战略驱动的业务架构设计；<br>业务驱动的应用架构设计；<br>业务驱动的数据架构设计；<br>业务和技术趋势双轮驱动的技术架构设计。<br>再后，分享业界较为稀缺的《业务架构书》《技术方案书》优秀模板。<br>最后，分享 ToG/ToB 解决方案规划方法体系。</p>
+<h1 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h1><p>温昱<br>◆具有开发 / 管理 / 咨询职业经验<br>◆国内最早一批架构实践者之一<br>◆资深咨询顾问、培训讲师<br>◆指导多企业的解决方案部署</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p>第一篇 大局观<br>第 1 章 架构实践全景图	2<br>1.1 战略、BA、DA、AA、TA 五者的关系	2<br>1.2 BA、DA、AA、TA 的实际工作内容	4<br>1.3 从战略到架构，再到实施的过程	6<br>1.4 业务驱动 —— 小试业务流程驱动的 DA、AA、TA 设计	8<br>1.5 盘点收获	13<br>第 2 章 TOGAF 理论全景解读	14<br>2.1 解读 TOGAF 9.2 的 BA、DA、AA、TA 内容模型	15<br>2.2 解读 TOGAF 9.2 的启动、定义蓝图、实施的整体过程	18<br>2.3 盘点收获	23<br>第二篇 架构篇<br>第 3 章 战略驱动的业务架构设计	25<br>3.1 什么是业务架构（BA）	26<br>3.2 跨系统规划 —— 业务架构在全球出现的背景	28<br>3.3 信息孤岛 —— 业务架构在国内 “火” 起来的契机	32<br>3.4 数字化转型 —— 业务架构大有普及之势	34<br>3.5 解读 TOGAF 9.2 的业务架构方法	35<br>3.6 实践攻略：业务架构的实际工作内容	38<br>3.7 实践攻略：战略驱动的业务架构设计步骤	47<br>3.8 实践案例：数字化服务转型 —— 确定 Driver，做好调研	53<br>3.9 实践案例：数字化服务转型 —— 确定 BA 目标与策略	58<br>3.10 实践案例：数字化服务转型 —— 定义 BA 蓝图（组织结构）	61<br>3.11 实践案例：数字化服务转型 —— 定义 BA 蓝图（业务渠道）	65<br>3.12 实践案例：数字化服务转型 —— 定义 BA 蓝图（业务功能）	68<br>3.13 实践案例：数字化服务转型 —— 定义 BA 蓝图（商业模式）	75<br>3.14 实践案例：数字化服务转型 —— 定义 BA 蓝图（业务流程）	78<br>3.15 盘点收获	87<br>第 4 章 业务驱动的应用架构设计	88<br>4.1 什么是应用架构	89<br>4.2 解读 TOGAF 的应用架构方法	91<br>4.3 实践攻略：应用架构的实际工作内容	93<br>4.4 实践攻略：业务驱动的应用架构设计步骤	94<br>4.5 实践案例：智能物流柜方案 —— 应用架构设计串讲	95<br>4.6 实践案例：数字化服务转型 —— 确认业务功能需求	112<br>4.7 实践案例：数字化服务转型 —— 识别 IT 应用需求	117<br>4.8 实践案例：数字化服务转型 —— 分配功能、识别应用	119<br>4.9 关键技能：Archimate 建模	120<br>4.10 关键技能：穷举业务流程分支场景	134<br>4.11 盘点收获	140<br>第 5 章 业务驱动的数据架构设计	141<br>5.1 什么是数据架构（DA）	142<br>5.2 数据架构在全球的快速发展	144<br>5.3 解读 TOGAF 的数据架构方法	148<br>5.4 实践攻略：数据架构的实际工作内容	151<br>5.5 实践攻略：业务驱动的数据架构设计步骤	158<br>5.6 实践案例：电商系统 —— 业务驱动的数据建模串讲	160<br>5.7 实践案例：数字化服务转型 —— 分析数据需求，识别数据类型	166<br>5.8 实践案例：数字化服务转型 —— 设计数据模型，定义生命周期	169<br>5.9 实践案例：数字化服务转型 —— 抢到票后死机，怎么处理	173<br>5.10 实践案例：数字化服务转型 —— 规划数据存储，设计数据分布	174<br>5.11 实践案例：数字化服务转型 —— 数据流、数据沿袭、数据交换格式设计	175<br>5.12 盘点收获	176<br>第 6 章 双轮驱动的技术架构设计	177<br>6.1 什么是技术架构	178<br>6.2 生态变迁与技术浪潮	179<br>6.3 解读 TOGAF 的技术架构方法	190<br>6.4 实践攻略：技术架构的实际工作内容	192<br>6.5 实践攻略：双轮驱动的技术架构设计步骤	196<br>6.6 实践攻略：用 Hype Cycle 曲线评估技术趋势	199<br>6.7 实践攻略：如何基于评估做技术选型	206<br>6.8 实践案例：数字化服务转型 —— 部署结构	208<br>6.9 实践案例：数字化服务转型 —— 技术选型	210<br>6.10 实践案例：数字化服务转型 —— 负载均衡	211<br>6.11 盘点收获	212<br>第三篇 文档篇<br>第 7 章 业务架构书	214<br>7.1 战略、BA、DA、AA、TA、项目对应的文档	214<br>7.2 《业务架构书》的内容主线	216<br>7.3 《业务架构书》模板	216<br>第 8 章 技术方案书	217<br>8.1 技术方案书的位置	217<br>8.2 《技术方案书》的内容主线	219<br>8.3 《技术方案书》模板	219<br>第四篇 专题篇<br>第 9 章 ToG/ToB 解决方案规划	221<br>9.1 调研、诊断优化和方案规划的关系	222<br>9.2 调研的内容与产物 —— 外部分析篇	223<br>9.3 调研的内容与产物 —— 行业分析篇	225<br>9.4 调研的内容与产物 —— 内部分析篇	228<br>9.5 实践攻略：ToG/ToB 方案规划的具体步骤	230<br>9.6 实践攻略：如何做到逻辑通达、不留卡点	231<br>9.7 实践攻略：如何做好对标、看齐标杆	232<br>9.8 关键技能：外部分析 —— 政策解读框架、机会发现	233<br>9.9 关键技能：行业分析 —— 标杆研究、最佳实践梳理	234<br>9.10 盘点收获	236<br>附录 A 《业务架构书》模板	237<br>附录 B 《技术方案书》模板	254</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://url73.ctfile.com/f/35119273-1486940059-b3f642?p=5981">PDF 下载</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/images/logo.jpg"></div><div class="post-copyright__author_name">资源谷</div><div class="post-copyright__author_desc">汇聚优质资源，畅享便捷下载</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener external nofollow noreferrer" href="https://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fblog.gcdd.top%2Fposts%2F819b5aed.html&amp;title=%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E3%83%BB%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E3%83%BB%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98%EF%BC%88%E7%AC%AC%202%20%E7%89%88%EF%BC%89&amp;desc=undefined&amp;summary=undefined&amp;site=%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E3%83%BB%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E3%83%BB%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98%EF%BC%88%E7%AC%AC%202%20%E7%89%88%EF%BC%89&amp;pics=%2Fimages%2Fs34146951.jpg" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener external nofollow noreferrer" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fblog.gcdd.top%2Fposts%2F819b5aed.html&amp;title=%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E3%83%BB%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E3%83%BB%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98%EF%BC%88%E7%AC%AC%202%20%E7%89%88%EF%BC%89&amp;pic=%2Fimages%2Fs34146951.jpg" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener external nofollow noreferrer" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fblog.gcdd.top%2Fposts%2F819b5aed.html&amp;text=%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E3%83%BB%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E3%83%BB%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98%EF%BC%88%E7%AC%AC%202%20%E7%89%88%EF%BC%89" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener external nofollow noreferrer" href="https://t.me/share/url?url=http%3A%2F%2Fblog.gcdd.top%2Fposts%2F819b5aed.html&amp;text=%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84%E3%83%BB%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84%E3%83%BB%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98%EF%BC%88%E7%AC%AC%202%20%E7%89%88%EF%BC%89" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><div class="social-share-ico icon-link" onclick="utils.copy(&quot;http://blog.gcdd.top/posts/819b5aed.html&quot;)" title="复制文章链接"><i class="solitude fas fa-link"></i></div><div class="social-share-ico icon-qrcode" title="使用手机扫码阅读这篇文章"><i class="solitude fas fa-qrcode"></i><div class="share-main"><div class="share-main-all"><div id="qrcode"></div><div class="reward-dec">使用手机扫码阅读这篇文章</div></div></div><script pjax>typeof QRCode === 'function' && new QRCode(document.getElementById("qrcode"), {
+    text: 'http://blog.gcdd.top/posts/819b5aed.html',
+    correctLevel : QRCode.CorrectLevel.L
+});
+window.addEventListener('DOMContentLoaded', () => {
+    new QRCode(document.getElementById("qrcode"), {
+        text: 'http://blog.gcdd.top/posts/819b5aed.html',
+        correctLevel : QRCode.CorrectLevel.L
+    });
+});
+</script></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">资源谷</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9E%B6%E6%9E%84/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>架构<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>业务架构<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>应用架构<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>数据架构<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>技术架构<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>解决方案<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/%E6%95%B0%E5%AD%97%E5%8C%96%E8%BD%AC%E5%9E%8B/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>数字化转型<span class="tagsPageCount">1</span></span></a></div></div></div><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="solitude fas fa-comment"></i><span> 评论</span></div></div><div class="comment-wrap"><div id="twikoo-wrap"></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/images/logo.jpg"></div><div class="description">一站式资源分享平台，提供软件、学习资料、小说等海量资源下载</div><div class="bottom-group"><span class="left"><div class="name">资源谷</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E7%AE%80%E4%BB%8B"><span class="toc-text">内容简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%9C%E8%80%85%E7%AE%80%E4%BB%8B"><span class="toc-text">作者简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-text">目录</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/posts/819b5aed.html" title="业务架构・应用架构・数据架构实战（第 2 版）"><div class="thumbnail"><img alt="业务架构・应用架构・数据架构实战（第 2 版）" src="/images/s34146951.jpg"></div><div class="content"><span class="title" href="/posts/819b5aed.html" title="业务架构・应用架构・数据架构实战（第 2 版）">业务架构・应用架构・数据架构实战（第 2 版）</span><span class="categories" href="/posts/819b5aed.html">软件开发</span></div></a></div></div></div></div></main><footer id="footer"><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2023 - 2025 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="/img/pwa/favicon.png">资源谷</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io/">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/everfu/hexo-theme-solitude">主题：Solitude</a></div></div></div></div></footer></div><!-- right_menu--><!-- inject body--><div><script src="/js/utils.js?v=3.0.18"></script><script src="/js/main.js?v=3.0.18"></script><script src="/js/third_party/waterfall.min.js?v=3.0.18"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="https://fastly.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="https://fastly.jsdelivr.net/npm/typeit@8.8.7/dist/index.umd.min.js"></script><script src="/js/third_party/universe.min.js?v=3.0.18"></script><script>dark()
+</script><script src="/js/tw_cn.js?v=3.0.18"></script><script src="https://fastly.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="https://fastly.jsdelivr.net/npm/colorthief@2.6.0/dist/color-thief.min.js"></script><script src="/js/covercolor/local.js?v=3.0.18"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://fastly.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="js-pjax"><script>(() => {
+    const getCount = () => {
+        const ele = document.querySelectorAll('.twikoo-count')
+        if (!ele) return
+        twikoo.getCommentsCount({
+            envId: 'https://gczy.netlify.app/.netlify/functions/twikoo',
+            region: '',
+            urls: [window.location.pathname],
+            includeReply: false
+        }).then(res => {
+            ele.forEach(item => item.textContent = res[0].count)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+    const init = () => {
+        twikoo.init(Object.assign({
+            el: '#twikoo-wrap',
+            envId: 'https://gczy.netlify.app/.netlify/functions/twikoo',
+            region: '',
+            path: window.location.pathname,
+            onCommentLoaded: () => {
+                GLOBAL_CONFIG.lightbox && utils.lightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+            }
+        }, null))
+
+        
+        sco.owoBig({
+            body: '.OwO-body',
+            item: '.OwO-items li'
+        })
+
+        false && barrageTwikoo()
+    }
+
+    const loadTwikoo = () => {
+        if (typeof twikoo === 'object') setTimeout(init,0)
+        else utils.getScript('https://fastly.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js').then(init)
+    }
+
+    if ('Twikoo' === 'Twikoo' || false) {
+        if (false) utils.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+        else loadTwikoo()
+    } else {
+        window.loadTwoComment = loadTwikoo
+    }
+})()
+</script></div></div><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fas fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=3.0.18"></script><!-- music--></body></html>
+        <script>
+            const posts = ["posts/819b5aed.html"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
