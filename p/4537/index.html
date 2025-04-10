@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Postman 使用技巧 | 资源谷</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon.png"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=3.0.18"><!-- inject head--><meta name="baidu-site-verification" content="codeva-YTxPT6VRvT"><link rel="canonical" href="https://blog.gcdd.top/p/4537/index.html"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="Postman 是什么Postman 是 chrome 的一款插件，用于做接口请求测试，无论是前端，后台还是测试人员，都可以用 postman 来测试接口，用起来非常方便。 Postman 安装官网下载 (翻墙)https:&amp;#x2F;&amp;#x2F;www.getpostman.com&amp;#x2F;downloads&amp;#x2F; 蓝奏云htt"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="资源谷"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon.png"><link rel="apple-touch-icon" href="/img/pwa/favicon.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.18' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+          },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":false,"path":"/search.xml"},
+    runtime: '2023-04-20 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."}},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: ["祝你好运，陌生人"],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: true
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: {"jump":"404 Not Found","back":"ヾ(≧∇≦*)ゝHey, hey, you fell for it."},
+    expire: false,
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: true,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><!-- universe--><canvas id="universe"></canvas><!-- background img--><!-- loading--><!-- console--><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">77</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">51</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法<sup>3</sup></a><a href="/tags/Kotlin/">Kotlin<sup>6</sup></a><a href="/tags/Cassandra/">Cassandra<sup>1</sup></a><a href="/tags/SSO/">SSO<sup>2</sup></a><a href="/tags/CAS/">CAS<sup>2</sup></a><a href="/tags/Java/">Java<sup>6</sup></a><a href="/tags/Dubbo/">Dubbo<sup>1</sup></a><a href="/tags/docker/">docker<sup>1</sup></a><a href="/tags/FastDFS/">FastDFS<sup>1</sup></a><a href="/tags/Spring/">Spring<sup>8</sup></a><a href="/tags/%E5%AE%89%E5%85%A8/">安全<sup>1</sup></a><a href="/tags/Gradle/">Gradle<sup>1</sup></a><a href="/tags/Jackson/">Jackson<sup>1</sup></a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式<sup>4</sup></a><a href="/tags/UML/">UML<sup>2</sup></a><a href="/tags/Lombok/">Lombok<sup>1</sup></a><a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">科学上网<sup>1</sup></a><a href="/tags/Kubernetes/">Kubernetes<sup>1</sup></a><a href="/tags/Docker/">Docker<sup>2</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库<sup>2</sup></a><a href="/tags/Nginx/">Nginx<sup>2</sup></a><a href="/tags/Redis/">Redis<sup>2</sup></a><a href="/tags/NoSql/">NoSql<sup>3</sup></a><a href="/tags/Scala/">Scala<sup>1</sup></a><a href="/tags/Spring-Boot/">Spring Boot<sup>2</sup></a><a href="/tags/Spring-Security/">Spring Security<sup>1</sup></a><a href="/tags/Spring-Cloud/">Spring Cloud<sup>2</sup></a><a href="/tags/Chrome/">Chrome<sup>1</sup></a><a href="/tags/MongoDB/">MongoDB<sup>1</sup></a><a href="/tags/phpcms/">phpcms<sup>1</sup></a><a href="/tags/Ubuntu/">Ubuntu<sup>4</sup></a><a href="/tags/macOs/">macOs<sup>1</sup></a><a href="/tags/%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7/">工具技巧<sup>1</sup></a><a href="/tags/HTTPS/">HTTPS<sup>1</sup></a><a href="/tags/Hyper-V/">Hyper-V<sup>1</sup></a><a href="/tags/Tesseract-Ocr/">Tesseract-Ocr<sup>1</sup></a><a href="/tags/%E9%BB%98%E8%AE%A4/">默认<sup>1</sup></a><a href="/tags/xxl-job/">xxl-job<sup>1</sup></a><a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式<sup>1</sup></a><a href="/tags/%E8%BF%90%E7%BB%B4/">运维<sup>3</sup></a><a href="/tags/Jcenter/">Jcenter<sup>1</sup></a><a href="/tags/%E8%B7%A8%E5%9F%9F/">跨域<sup>1</sup></a><a href="/tags/Privacy/">Privacy<sup>1</sup></a><a href="/tags/%E8%BD%AF%E4%BB%B6%E6%94%B6%E8%97%8F/">软件收藏<sup>1</sup></a><a href="/tags/%E6%8A%80%E5%B7%A7/">技巧<sup>1</sup></a><a href="/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/">消息中间件<sup>3</sup></a><a href="/tags/ActiveMQ/">ActiveMQ<sup>1</sup></a><a href="/tags/RabbitMQ/">RabbitMQ<sup>1</sup></a><a href="/tags/%E4%B8%80%E8%87%B4%E6%80%A7Hash/">一致性Hash<sup>1</sup></a><a href="/tags/algorithm/">algorithm<sup>1</sup></a><a href="/tags/Spring-Security/">Spring-Security<sup>1</sup></a></div></div></div></div><!-- keyboard--><!-- righhtside--><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><a id="site-name" href="/" title="返回博客主页"><span class="title">资源谷</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">Postman 使用技巧</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer" title="搜索"><i class="solitude fas fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="/k" alt="Postman 使用技巧"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0/">个人笔记</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>工具技巧</span></a></div></div></div></div><h1 class="post-title">Postman 使用技巧</h1><div id="post-meta"><div class="meta-secondline"><span class="post-meta-date" title="发布于 2019-01-11 14:13:35"><i class="post-meta-icon solitude fas fa-calendar-days"></i><time datetime="2019-01-11T06:13:35.000Z">2019-01-11T06:13:35.000Z</time></span><span class="post-meta-date" title="最后更新于 2025-04-10 21:24:41"><i class="post-meta-icon solitude fas fa-arrows-rotate"></i><time datetime="2025-04-10T13:24:41.870Z">2025-04-10T13:24:41.870Z</time></span><span class="post-meta-wordcount"><i class="post-meta-icon solitude fas fa-file-word" title="文章字数"></i><span class="word-count">1.1k</span><span class="post-meta-separator"></span><i class="post-meta-icon solitude fas fa-clock" title="阅读耗时"></i><span>4 分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><h1 id="Postman是什么"><a href="#Postman是什么" class="headerlink" title="Postman是什么"></a>Postman 是什么</h1><p>Postman 是 chrome 的一款插件，用于做接口请求测试，无论是前端，后台还是测试人员，都可以用 postman 来测试接口，用起来非常方便。<span id="more"></span></p>
+<h1 id="Postman安装"><a href="#Postman安装" class="headerlink" title="Postman安装"></a>Postman 安装</h1><h2 id="官网下载-翻墙"><a href="#官网下载-翻墙" class="headerlink" title="官网下载(翻墙)"></a>官网下载 (翻墙)</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.getpostman.com/downloads/">https://www.getpostman.com/downloads/</a></p>
+<h2 id="蓝奏云"><a href="#蓝奏云" class="headerlink" title="蓝奏云"></a>蓝奏云</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.lanzous.com/i2en5xc">https://www.lanzous.com/i2en5xc</a></p>
+<h1 id="Postman常用功能"><a href="#Postman常用功能" class="headerlink" title="Postman常用功能"></a>Postman 常用功能</h1><p>安装好之后，我们先打开 Postman，可以看到界面分成左右两个部分，右边是我们后头要讲的 collection，左边是现在要讲的 request builder。在 request builder 中，我们可以通过 Postman 快速的随意组装出我们希望的 request。一般来说，所有的 HTTP Request 都分成 4 个部分，URL, method, headers 和 body。而 Postman 针对这几部分都有针对性的工具。</p>
+<p><img src="https://i.imgur.com/JHqfDbU.png"></p>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>要组装一条 Request, URL 永远是你首先要填的内容，在 Postman 里面你曾输入过的 URL 是可以通过下拉自动补全的哦。如果你点击 Params 按钮，Postman 会弹出一个键值编辑器，你可以在哪里输入 URL 的 Parameter，Postman 会帮你自动加入到 URL 当中，反之，如果你的 URL 当中已经有了参数，那 Postman 会在你打开键值编辑器的时候把参数自动载入</p>
+<p><img src="https://i.imgur.com/OyiHdls.png"></p>
+<h2 id="Headers"><a href="#Headers" class="headerlink" title="Headers"></a>Headers</h2><p>点击’Headers’按钮，Postman 同样会弹出一个键值编辑器。在这里，你可以随意添加你想要的 Header attribute，同样 Postman 为我们通过了很贴心的 auto-complete 功能，敲入一个字母，你可以从下拉菜单里选择你想要的标准 atrribute</p>
+<p><img src="https://i.imgur.com/N0KHlcZ.png"></p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>要选择 Request 的 Method 是很简单的，Postman 支持所有的 Method，而一旦你选择了 Method，Postman 的 request body 编辑器会根据的你选择，自动的发生改变。</p>
+<p><img src="https://i.imgur.com/vJl711X.png"></p>
+<h2 id="Request-Body"><a href="#Request-Body" class="headerlink" title="Request Body"></a>Request Body</h2><p>如果我们要创建的 request 是类似于 POST，那我们就需要编辑 Request Body，Postman 根据 body type 的不同，提供了 4 中编辑方式：</p>
+<ul>
+<li>form-data</li>
+<li>x-www-form-urlencoded</li>
+<li>raw</li>
+<li>binary</li>
+</ul>
+<p><img src="https://i.imgur.com/dgaY012.png"></p>
+<p>（我们这里是可以传文件的哦）</p>
+<h1 id="postman高级用法"><a href="#postman高级用法" class="headerlink" title="postman高级用法"></a>postman 高级用法</h1><h2 id="colletions-接口集合"><a href="#colletions-接口集合" class="headerlink" title="colletions(接口集合)"></a>colletions (接口集合)</h2><p>在开发过程中，可能会遇到多项目同时开发维护的情况，Postman 友好的提供了 colletions 功能，类似与项目文件夹一样，可以把归属于同一类的接口分类到一起，便于管理维护。</p>
+<ol>
+<li>点击 NEW -&gt; 选择 collection，创建一个项目空间。</li>
+</ol>
+<p><img src="https://i.imgur.com/RcYq3Ba.png"></p>
+<ol start="2">
+<li>输入项目名称，点击 create。</li>
+</ol>
+<p><img src="https://i.imgur.com/zGFYC1F.png"></p>
+<h2 id="colletions-folder-集合中的文件夹"><a href="#colletions-folder-集合中的文件夹" class="headerlink" title="colletions folder(集合中的文件夹)"></a>colletions folder (集合中的文件夹)</h2><p>每个项目会有多个接口，有些是一类功能，例如，用户管理接口，文章列表接口，Postman 提供 folder 目录来进行细致的分类。</p>
+<ol>
+<li>选择一个项目，点击 Add Folder</li>
+</ol>
+<p><img src="https://i.imgur.com/v2qY1uW.png"></p>
+<ol start="2">
+<li> 输入目录名称，点击 create</li>
+</ol>
+<p><img src="https://i.imgur.com/exymkyT.png"></p>
+<p>每个接口都可以归类到某个项目，或某个项目的子目录中。</p>
+<p><img src="https://i.imgur.com/pRltLVX.png"></p>
+<h2 id="Environment-环境变量"><a href="#Environment-环境变量" class="headerlink" title="Environment(环境变量)"></a>Environment (环境变量)</h2><p>Postman 允许定义自己的环境变量（Environment），最常见的是将测试 URL 进行定义成变量的形式，这样随着你的域名怎么变，URL 就不用变更，非常方便。除此之外，也可以将一些敏感的测试值定义为环境变量，比如密码。接下来，来看下怎么新建一组环境变量，如下操作打开环境变量的管理入口：</p>
+<p><img src="https://i.imgur.com/G8b6kTl.png"></p>
+<p>打开管理环境变量的窗口，输入名称，添加一组键值对，如下图所示：</p>
+<p><img src="https://i.imgur.com/5oJhjWe.png"></p>
+<p>环境变量要以双大括号的方式来引用，可以在右上方下拉框处选择相应的环境变量，我们实测一下刚才添加的 Url 的变量：</p>
+<p><img src="https://i.imgur.com/FAc6qME.png"></p>
+<h2 id="通过脚本设置变量"><a href="#通过脚本设置变量" class="headerlink" title="通过脚本设置变量"></a>通过脚本设置变量</h2><p>Postman 允许用户自定义脚本，并提供了两种类型的脚本：</p>
+<ul>
+<li>Pre-request Script：执行 request 请求前先运行，可以在里面预先设置些所需变量</li>
+<li> Tests：request 返回后执行的，可以对返回信息进行提取过滤，或者执行一些验证操作</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>获取如下返回信息中的 user_id 值:</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设服务端返回的Body内容如下:</span></span><br><span class="line"><span class="punctuation">{</span></span><br><span class="line">  <span class="attr">"token"</span><span class="punctuation">:</span> <span class="punctuation">{</span></span><br><span class="line">    <span class="attr">"user_id"</span><span class="punctuation">:</span> <span class="string">"2079876912"</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">"access_token"</span><span class="punctuation">:</span> <span class="string">"26A90E317DBC1AD363B2E2CE53F76F2DD85CB172DF7D813099477BAACB69DC49C794BAECEDC68331"</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">"expires_at"</span><span class="punctuation">:</span> <span class="string">"2016-06-22T12:46:51.637+0800"</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">"refresh_token"</span><span class="punctuation">:</span> <span class="string">"26A90E317DBC1AD3CD1556CF2B3923DD60AEBADDCBC1D9D899262A55D15273F735E407A6BEC56B84"</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">"mac_key"</span><span class="punctuation">:</span> <span class="string">"4FAhd4OpfC"</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">"mac_algorithm"</span><span class="punctuation">:</span> <span class="string">"hmac-sha-256"</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">"server_time"</span><span class="punctuation">:</span> <span class="string">"2016-06-15T12:46:51.649+0800"</span></span><br><span class="line">  <span class="punctuation">}</span></span><br><span class="line"><span class="punctuation">}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>在 Tests 中对 user_id 值进行提取并赋值成全局变量:</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 判断是否存在<span class="string">'user_id'</span>值</span><br><span class="line">tests[<span class="string">"Body contains user_id"</span>] = responseBody.has(<span class="string">"user_id"</span>);</span><br><span class="line"><span class="keyword">if</span>(tests[<span class="string">"Body contains user_id"</span>]){</span><br><span class="line">    // 将返回信息解析成对象</span><br><span class="line">    var responseData = JSON.parse(responseBody);</span><br><span class="line">    tests[<span class="string">"value_user_id"</span>]=responseData.token.user_id</span><br><span class="line">    // 设置全局变量</span><br><span class="line">    postman.setGlobalVariable(<span class="string">"user_id"</span>,tests[<span class="string">"value_user_id"</span>]);</span><br><span class="line">}<span class="keyword">else</span>{</span><br><span class="line">    postman.setGlobalVariable(<span class="string">"user_id"</span>,<span class="string">"默认user_id"</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="实践案例"><a href="#实践案例" class="headerlink" title="实践案例"></a>实践案例</h1><h2 id="项目接口分类管理"><a href="#项目接口分类管理" class="headerlink" title="项目接口分类管理"></a>项目接口分类管理</h2><p><img src="https://i.imgur.com/LXxBYdq.png"></p>
+<h2 id="登录获取token并设置为全局变量"><a href="#登录获取token并设置为全局变量" class="headerlink" title="登录获取token并设置为全局变量"></a>登录获取 token 并设置为全局变量</h2><p><img src="https://i.imgur.com/gIXLd5c.png"></p>
+<h2 id="接口使用登录后的token"><a href="#接口使用登录后的token" class="headerlink" title="接口使用登录后的token"></a>接口使用登录后的 token</h2><p><img src="https://i.imgur.com/1RCOliR.png"></p>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/images/logo.jpg"></div><div class="post-copyright__author_name">资源谷</div><div class="post-copyright__author_desc">汇聚优质资源，畅享便捷下载</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener external nofollow noreferrer" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fblog.gcdd.top%2Fp%2F4537%2F&amp;title=Postman%20%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7&amp;desc=undefined&amp;summary=undefined&amp;site=Postman%20%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7&amp;pics=k" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener external nofollow noreferrer" href="http://service.weibo.com/share/share.php?url=https%3A%2F%2Fblog.gcdd.top%2Fp%2F4537%2F&amp;title=Postman%20%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7&amp;pic=k" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener external nofollow noreferrer" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fblog.gcdd.top%2Fp%2F4537%2F&amp;text=Postman%20%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener external nofollow noreferrer" href="https://t.me/share/url?url=https%3A%2F%2Fblog.gcdd.top%2Fp%2F4537%2F&amp;text=Postman%20%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><div class="social-share-ico icon-link" onclick="utils.copy(&quot;https://blog.gcdd.top/p/4537/&quot;)" title="复制文章链接"><i class="solitude fas fa-link"></i></div><div class="social-share-ico icon-qrcode" title="使用手机扫码阅读这篇文章"><i class="solitude fas fa-qrcode"></i><div class="share-main"><div class="share-main-all"><div id="qrcode"></div><div class="reward-dec">使用手机扫码阅读这篇文章</div></div></div><script pjax>typeof QRCode === 'function' && new QRCode(document.getElementById("qrcode"), {
+    text: 'https://blog.gcdd.top/p/4537/',
+    correctLevel : QRCode.CorrectLevel.L
+});
+window.addEventListener('DOMContentLoaded', () => {
+    new QRCode(document.getElementById("qrcode"), {
+        text: 'https://blog.gcdd.top/p/4537/',
+        correctLevel : QRCode.CorrectLevel.L
+    });
+});
+</script></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">资源谷</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>工具技巧<span class="tagsPageCount">1</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/12153/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">EntityManager 的 Clear 方法的使用</div></div></a></div><div class="next-post pull-right"><a href="/p/55630/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java8 新特性一览表</div></div></a></div></nav><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="solitude fas fa-comment"></i><span> 评论</span></div></div><div class="comment-wrap"><div id="twikoo-wrap"></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/images/logo.jpg"></div><div class="description">一站式资源分享平台，提供软件、学习资料、小说等海量资源下载</div><div class="bottom-group"><span class="left"><div class="name">资源谷</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Postman%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">Postman 是什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Postman%E5%AE%89%E8%A3%85"><span class="toc-text">Postman 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD-%E7%BF%BB%E5%A2%99"><span class="toc-text">官网下载 (翻墙)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%93%9D%E5%A5%8F%E4%BA%91"><span class="toc-text">蓝奏云</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Postman%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="toc-text">Postman 常用功能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#URL"><span class="toc-text">URL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Headers"><span class="toc-text">Headers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method"><span class="toc-text">Method</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Request-Body"><span class="toc-text">Request Body</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#postman%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="toc-text">postman 高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#colletions-%E6%8E%A5%E5%8F%A3%E9%9B%86%E5%90%88"><span class="toc-text">colletions (接口集合)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#colletions-folder-%E9%9B%86%E5%90%88%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-text">colletions folder (集合中的文件夹)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Environment-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">Environment (环境变量)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E8%84%9A%E6%9C%AC%E8%AE%BE%E7%BD%AE%E5%8F%98%E9%87%8F"><span class="toc-text">通过脚本设置变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-text">例子</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E6%A1%88%E4%BE%8B"><span class="toc-text">实践案例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%8E%A5%E5%8F%A3%E5%88%86%E7%B1%BB%E7%AE%A1%E7%90%86"><span class="toc-text">项目接口分类管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E8%8E%B7%E5%8F%96token%E5%B9%B6%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-text">登录获取 token 并设置为全局变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E4%BD%BF%E7%94%A8%E7%99%BB%E5%BD%95%E5%90%8E%E7%9A%84token"><span class="toc-text">接口使用登录后的 token</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/p/6/" title="Untitled"><div class="thumbnail"><img alt="Untitled" src="/j"></div><div class="content"><span class="title" href="/p/6/" title="Untitled">Untitled</span></div></a><a class="aside-list-item" href="/p/17672/" title="SKyWalking 全链路追踪（二）Java 应用接入 SkyWalking Agent"><div class="thumbnail"><img alt="SKyWalking 全链路追踪（二）Java 应用接入 SkyWalking Agent" src="/"></div><div class="content"><span class="title" href="/p/17672/" title="SKyWalking 全链路追踪（二）Java 应用接入 SkyWalking Agent">SKyWalking 全链路追踪（二）Java 应用接入 SkyWalking Agent</span><span class="categories" href="/p/17672/">数据结构与算法入门</span></div></a><a class="aside-list-item" href="/p/45444/" title="SkyWalking 全链路追踪（一）部署和初体验"><div class="thumbnail"><img alt="SkyWalking 全链路追踪（一）部署和初体验" src="/g"></div><div class="content"><span class="title" href="/p/45444/" title="SkyWalking 全链路追踪（一）部署和初体验">SkyWalking 全链路追踪（一）部署和初体验</span><span class="categories" href="/p/45444/">数据结构与算法入门</span></div></a><a class="aside-list-item" href="/p/62528/" title="切换博客到七牛云"><div class="thumbnail"><img alt="切换博客到七牛云" src="/j"></div><div class="content"><span class="title" href="/p/62528/" title="切换博客到七牛云">切换博客到七牛云</span><span class="categories" href="/p/62528/">数据结构与算法入门</span></div></a><a class="aside-list-item" href="/p/14719/" title="切换国内源大全（收集整理）"><div class="thumbnail"><img alt="切换国内源大全（收集整理）" src="/"></div><div class="content"><span class="title" href="/p/14719/" title="切换国内源大全（收集整理）">切换国内源大全（收集整理）</span><span class="categories" href="/p/14719/">个人笔记</span></div></a></div></div></div></div></main><footer id="footer"><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2023 - 2025 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="/img/pwa/favicon.png">资源谷</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io/">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/everfu/hexo-theme-solitude">主题：Solitude</a></div></div></div></div></footer></div><!-- right_menu--><!-- inject body--><div><script src="/js/utils.js?v=3.0.18"></script><script src="/js/main.js?v=3.0.18"></script><script src="/js/third_party/waterfall.min.js?v=3.0.18"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="https://fastly.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="https://fastly.jsdelivr.net/npm/typeit@8.8.7/dist/index.umd.min.js"></script><script src="/js/third_party/universe.min.js?v=3.0.18"></script><script>dark()
+</script><script src="/js/tw_cn.js?v=3.0.18"></script><script src="https://fastly.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script src="https://fastly.jsdelivr.net/npm/colorthief@2.6.0/dist/color-thief.min.js"></script><script src="/js/covercolor/local.js?v=3.0.18"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://fastly.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="js-pjax"><script>(() => {
+    const getCount = () => {
+        const ele = document.querySelectorAll('.twikoo-count')
+        if (!ele) return
+        twikoo.getCommentsCount({
+            envId: 'https://gczy.netlify.app/.netlify/functions/twikoo',
+            region: '',
+            urls: [window.location.pathname],
+            includeReply: false
+        }).then(res => {
+            ele.forEach(item => item.textContent = res[0].count)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+    const init = () => {
+        twikoo.init(Object.assign({
+            el: '#twikoo-wrap',
+            envId: 'https://gczy.netlify.app/.netlify/functions/twikoo',
+            region: '',
+            path: window.location.pathname,
+            onCommentLoaded: () => {
+                GLOBAL_CONFIG.lightbox && utils.lightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+            }
+        }, null))
+
+        
+        sco.owoBig({
+            body: '.OwO-body',
+            item: '.OwO-items li'
+        })
+
+        false && barrageTwikoo()
+    }
+
+    const loadTwikoo = () => {
+        if (typeof twikoo === 'object') setTimeout(init,0)
+        else utils.getScript('https://fastly.jsdelivr.net/npm/twikoo@1.6.41/dist/twikoo.all.min.js').then(init)
+    }
+
+    if ('Twikoo' === 'Twikoo' || false) {
+        if (false) utils.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+        else loadTwikoo()
+    } else {
+        window.loadTwoComment = loadTwikoo
+    }
+})()
+</script></div></div><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fas fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=3.0.18"></script><!-- music--></body></html>
+        <script>
+            const posts = ["p/6/","p/17672/","p/45444/","p/62528/","p/14719/","p/23035/","p/31745/","p/49764/","p/58149/","p/16155/","p/55865/","p/7569/","p/29831/","p/46199/","p/39168/","p/2526/","p/63354/","p/20900/","p/13982/","p/9306/","p/16060/","p/34460/","p/34461/","p/60563/","p/37757/","p/46997/","p/29031/","p/709/","p/30009/","p/46186/","p/30626/","p/21710/","p/64818/","p/63230/","p/6604/","p/17023/","p/14834/","p/5357/","p/53809/","p/28056/","p/29085/","p/11305/","p/5479/","p/61241/","p/52703/","p/1091/","p/38807/","p/12805/","p/60138/","p/7877/","p/58700/","p/8505/","p/10700/","p/12232/","p/32495/","p/45284/","p/27791/","p/60483/","p/56864/","p/433/","p/20136/","p/49357/","p/18285/","p/17046/","p/56384/","p/34331/","p/356/","p/7382/","p/61811/","p/12106/","p/12153/","p/4537/","p/55630/","p/59866/","p/31514/","p/37491/","p/14256/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
